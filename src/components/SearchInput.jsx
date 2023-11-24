@@ -1,34 +1,30 @@
-//import { render } from "@testing-library/react";
-import React from "react";
+import { useState } from "react";
 
-class SearchInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { entry: "" };
-  }
-  onFormSubmit = (event) => {
-    event.preventDefault()
-    this.props.onSearchSubmit(this.state.entry)
-  }
-  render() {
-    return (
-      <div className="ui segment">
-        <form onSubmit={this.onFormSubmit} className="ui form" action="">
-          <div className="field">
-            <div className="ui massive icon input">
-              <input
-                type="text"
-                placeholder="Search.."
-                onChange={(event) => this.setState({ entry:event.target.value })}
-                value={this.state.entry}
-              />
-              <i className="search icon"></i>
-            </div>
+const SearchInput = ({ onSearchSubmit }) => {
+  const [entry, setEntry] = useState("");
+
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    onSearchSubmit(entry);
+  };
+
+  return (
+    <div className="ui segment">
+      <form onSubmit={onFormSubmit} className="ui form" action="">
+        <div className="field">
+          <div className="ui massive icon input">
+            <input
+              type="text"
+              placeholder="Search.."
+              onChange={(event) => setEntry(event.target.value)}
+              value={entry}
+            />
+            <i className="search icon"></i>
           </div>
-        </form>
-      </div>
-    );
-  }
-}
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default SearchInput;
